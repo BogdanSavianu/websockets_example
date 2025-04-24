@@ -1,0 +1,5 @@
+*.png
+*.jpg
+.DS_Store
+*/.DS_Store
+rust_ws_server/target/
