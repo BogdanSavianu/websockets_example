@@ -9,15 +9,17 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func writeMessages(conn *websocket.Conn) {
+func writeMessages(conn *websocket.Conn, clientID string) {
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Enter message to send:")
+	fmt.Printf("[%s] Enter message to send:\n", clientID)
 	for scanner.Scan() {
 		text := scanner.Text()
-		err := conn.WriteMessage(websocket.TextMessage, []byte(text))
+		message := fmt.Sprintf("[%s] %s", clientID, text)
+		err := conn.WriteMessage(websocket.TextMessage, []byte(message))
 		if err != nil {
 			log.Println("Write error: ", err)
 			return
 		}
+		fmt.Printf("[%s] Enter message to send:\n", clientID)
 	}
 }
